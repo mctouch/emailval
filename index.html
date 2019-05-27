@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Polythene for Mithril: Text Field</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript" src="/js/babel/babel.js"></script>
+
+  <script
+    type="text/javascript"
+    src="/js/lib/dummy.js"
+    
+  ></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+
+  <style id="compiled-css" type="text/css">
+      .row {
+  padding: 16px;
+  background: #eceff1;
+}
+.row + .row {
+  border-top: 1px solid #e0e0e0;
+}
+.row + .row.pe-dark-tone {
+  border-top: none;
+}
+.row.pe-dark-tone + .row.pe-dark-tone {
+  border-top: 1px solid #888;
+}
+.row.pe-dark-tone {
+  background: #333;
+}
+.row.title {
+  color: #333;
+}
+.row.pe-dark-tone .title {
+  color: #fff;
+}
+.row.note {
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+.row.note a:link,
+.row.note a:visited {
+  text-decoration: none;
+  color: #0366d6;
+}
+.component {
+  margin: 2rem 0;
+}
+  </style>
+
+
+  <!-- TODO: Missing CoffeeScript 2 -->
+
+  <script type="text/jsx"
+    data-presets="es2017,react,stage-0"
+    data-plugins="transform-decorators-legacy">
+//<![CDATA[
+
+  
+const { TextField, RaisedButton } = polythene;
+const stream = window.m.stream;
+
+const SetValue = {
+  oninit: vnode => {
+    const value = stream("");
+    const setInputState = stream();
+    vnode.state = {
+      value,
+      setInputState
+    };
+  },
+  view: vnode => {
+    const state = vnode.state;
+    const value = state.value();
+    const setInputState = state.setInputState();
+    return m("div", [
+      m(TextField, {
+        help: "Type some text, or press ADD RANDOM to insert a character programmaticaly",
+        events: {
+          oninput: m.withAttr("value", value => state.value(value))
+        },
+        onChange: newState => (
+        	state.setInputState(newState.setInputState),
+          state.value(newState.value)
+        ),
+        value,
+      }),
+      m(".pe-button-row", [
+        m(RaisedButton, {
+          label: "Add random",
+          events: {
+            onclick: () => setInputState({
+              value: value + String.fromCharCode(97 + Math.floor(Math.random() * 26)),
+              focus: true
+            })
+          },
+        }),
+        m(RaisedButton, {
+          label: "Clear",
+          events: {
+            onclick: () => setInputState({ focus: true, value: "" })
+          },
+        })
+      ])
+    ]);
+  }
+}
+
+const App = {
+  view: () => [
+    
+    m(".row", [
+      m(".title", "Name"),
+      m(".component",
+        m(TextField, {
+            label: "Your Name",
+            help: "Enter your name",
+          id: "my-id",
+          counter: 30,
+          error: "You have exceeded the maximum number of characters.",
+          required: true
+        })
+      )
+    ]),
+    m(".row", [
+      m(".title", "Floating Name"),
+      m(".component",
+        m(TextField, {
+        	label: "Name",
+          floatingLabel: true
+        })
+      )
+    ]),
+    
+    m(".row", [
+      m(".title", "Request"),
+      m(".component",
+        m(TextField, {
+        	label: "Enter the details of your request for information",
+          floatingLabel: true,
+          multiLine: true,
+          rows: 2
+        })
+      )
+    ]),
+    
+    m(".row", [
+      m(".title", "Email validation"),
+      m(".component",
+        m(TextField, {
+        	defaultValue: "abC",
+          validate: value => 
+            value !== value.toLowerCase()
+              ? ({
+                valid: false,
+                error: "Only use lowercase characters."
+              })
+              : null,
+          validateAtStart: true
+        })
+      )
+    ]),
+    
+    
+    
+  ]
+};
+
+m.mount(document.getElementById("root"), App);
+
+
+//]]></script>
+
+</head>
+<body>
+    <div id="root"></div>
+
+<script src="https://unpkg.com/mithril@1.1.6/mithril.min.js"></script>
+<script src="https://unpkg.com/mithril-stream"></script>
+<script src="https://rawgit.com/ArthurClemens/polythene/master/packages/polythene-mithril/dist/polythene-mithril-standalone.js"></script>
+
+  
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "m396q0hh"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+</body>
+</html>

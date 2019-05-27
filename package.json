@@ -1,0 +1,12 @@
+{
+  "name": "emailval",
+  "version": "1.0.0",
+  "description": "email validation in mithril with polythene",
+  "main": "index.js",
+  "repository": "https://github.com/mctouch/emailval.git",
+  "author": "mctouch <mctouched@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "powerform": "^3.1.5"
+  }
+}
